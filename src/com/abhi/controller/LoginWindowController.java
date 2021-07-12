@@ -2,7 +2,6 @@ package com.abhi.controller;
 
 import com.abhi.EmailManager;
 import com.abhi.view.ViewFactory;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -24,7 +23,7 @@ public class LoginWindowController extends BaseController {
     }
 
     @FXML
-    void loginButtonAction(ActionEvent event) {
+    void loginButtonAction() {
         viewFactory.showMainWindow();
         //using any one of the login scene elements to get stage out of it
         Stage stage = (Stage) emailField.getScene().getWindow();
