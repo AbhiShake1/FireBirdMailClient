@@ -11,13 +11,18 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewFactory {
 
     private EmailManager emailManager;
 
+    private List<Stage> activeStages;
+
     public ViewFactory(EmailManager emailManager) {
         this.emailManager = emailManager;
+        activeStages = new ArrayList<>();
     }
 
     public void showLoginWindow(){
@@ -69,9 +74,20 @@ public class ViewFactory {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+        activeStages.add(stage);
     }
 
     public void close(Stage stage){
         stage.close(); //close previous stage to avoid having 2 stages opened at once
+        activeStages.remove(stage);
+    }
+
+    public void updateStyles() {
+        for (Stage stage : activeStages){
+            Scene scene = stage.getScene();
+            scene.getStylesheets().clear(); //clear previous css
+            scene.getStylesheets().add(getClass().getResource(BackgroundTheme.getCssPath(theme)).toExternalForm());
+            scene.getStylesheets().add(getClass().getResource(FontSize.getCssPath(fontSize)).toExternalForm());
+        }
     }
 }
