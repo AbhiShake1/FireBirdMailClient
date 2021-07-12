@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class LoginWindowController extends BaseController {
 
@@ -24,7 +25,11 @@ public class LoginWindowController extends BaseController {
 
     @FXML
     void loginButtonAction(ActionEvent event) {
-        System.out.println("logged");
+        viewFactory.showMainWindow();
+        //using any one of the login scene elements to get stage out of it
+        Stage stage = (Stage) emailField.getScene().getWindow();
+        //close previous stage to avoid having 2 stages opened at once
+        viewFactory.close(stage); //link all view actions to ViewFactory instead of writing here to maintain proper pattern
     }
 
 }
