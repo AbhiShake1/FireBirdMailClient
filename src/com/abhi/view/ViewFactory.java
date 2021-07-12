@@ -4,6 +4,7 @@ import com.abhi.EmailManager;
 import com.abhi.controller.BaseController;
 import com.abhi.controller.LoginWindowController;
 import com.abhi.controller.MainWindowController;
+import com.abhi.controller.OptionsWindowController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,6 +28,31 @@ public class ViewFactory {
     public void showMainWindow(){
         BaseController controller = new MainWindowController(emailManager, this, "MainWindow.fxml");
         initializeStage(controller);
+    }
+
+    public void showOptionsWindow(){
+        BaseController controller = new OptionsWindowController(emailManager, this, "OptionsWindow.fxml");
+        initializeStage(controller);
+    }
+
+    //handling view options
+    private BackgroundTheme theme = BackgroundTheme.DEFAULT;
+    private FontSize fontSize = FontSize.MEDIUM;
+
+    public BackgroundTheme getBackgroundTheme() {
+        return theme;
+    }
+
+    public void setBackgroundTheme(BackgroundTheme theme) {
+        this.theme = theme;
+    }
+
+    public FontSize getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(FontSize fontSize) {
+        this.fontSize = fontSize;
     }
 
     private void initializeStage(BaseController controller){
