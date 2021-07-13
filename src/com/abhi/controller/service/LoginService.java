@@ -32,14 +32,15 @@ public class LoginService extends Service<EmailLoginResult> {
             store.connect(emailAccount.getProperties().getProperty("incomingHost"),
                     emailAccount.getAddress(), emailAccount.getPassword());
             emailAccount.setStore(store);
+            emailManager.addEmailAccount(emailAccount);
         }catch (NoSuchProviderException nspe){
             nspe.printStackTrace();
             return EmailLoginResult.FAILED_BY_NETWORK;
         }catch (AuthenticationFailedException afe){
             afe.printStackTrace();
             return EmailLoginResult.FAILED_BY_CREDENTIALS;
-        }catch (MessagingException nspe){
-            nspe.printStackTrace();
+        }catch (MessagingException me){
+            me.printStackTrace();
             return EmailLoginResult.FAILED_BY_UNEXPECTED_ERROR;
         }catch (Exception e){
             e.printStackTrace();
