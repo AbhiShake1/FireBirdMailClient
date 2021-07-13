@@ -20,9 +20,15 @@ public class ViewFactory {
 
     private List<Stage> activeStages;
 
+    private boolean mainViewInitialized;
+
     public ViewFactory(EmailManager emailManager) {
         this.emailManager = emailManager;
         activeStages = new ArrayList<>();
+    }
+
+    public boolean isMainViewInitialized() {
+        return mainViewInitialized;
     }
 
     public void showLoginWindow(){
@@ -33,6 +39,7 @@ public class ViewFactory {
     public void showMainWindow(){
         BaseController controller = new MainWindowController(emailManager, this, "MainWindow.fxml");
         initializeStage(controller);
+        mainViewInitialized = true;
     }
 
     public void showOptionsWindow(){
