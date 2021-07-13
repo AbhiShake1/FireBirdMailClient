@@ -10,8 +10,8 @@ import javax.mail.Store;
 
 public class FetchFolderService extends Service<Void> { //void return type. 'Void' is a special wrapper class
 
-    private Store store;
-    private EmailTreeItem<String> foldersRoot;
+    private final Store store;
+    private final EmailTreeItem<String> foldersRoot;
 
     public FetchFolderService(Store store, EmailTreeItem<String> treeItem) {
         this.store = store;

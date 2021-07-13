@@ -5,8 +5,8 @@ import java.util.Properties;
 
 public class EmailAccount {
 
-    private String address;
-    private String password;
+    private final String address;
+    private final String password;
     private Properties properties; //to hold email configs
     private Store store;
 
