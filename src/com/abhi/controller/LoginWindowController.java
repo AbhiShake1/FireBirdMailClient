@@ -48,7 +48,6 @@ public class LoginWindowController extends BaseController {
                     case FAILED_BY_UNEXPECTED_ERROR:
                         errorLabel.setText("Unexpected error");
                     default:
-                        return;
                 }
             });
         }

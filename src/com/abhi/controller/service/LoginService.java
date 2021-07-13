@@ -39,9 +39,6 @@ public class LoginService extends Service<EmailLoginResult> {
         }catch (AuthenticationFailedException afe){
             afe.printStackTrace();
             return EmailLoginResult.FAILED_BY_CREDENTIALS;
-        }catch (MessagingException me){
-            me.printStackTrace();
-            return EmailLoginResult.FAILED_BY_UNEXPECTED_ERROR;
         }catch (Exception e){
             e.printStackTrace();
             return EmailLoginResult.FAILED_BY_UNEXPECTED_ERROR;

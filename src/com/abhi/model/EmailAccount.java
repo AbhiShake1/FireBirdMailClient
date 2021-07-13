@@ -7,7 +7,7 @@ public class EmailAccount {
 
     private final String address;
     private final String password;
-    private Properties properties; //to hold email configs
+    private final Properties properties; //to hold email configs
     private Store store;
 
     public EmailAccount(String address, String password) {
@@ -33,10 +33,6 @@ public class EmailAccount {
 
     public Properties getProperties() {
         return properties;
-    }
-
-    public void setProperties(Properties properties) {
-        this.properties = properties;
     }
 
     public Store getStore() {

@@ -7,11 +7,7 @@ import com.abhi.model.EmailTreeItem;
 public class EmailManager {
 
     //handling folders
-    private EmailTreeItem<String> folderRoot = new EmailTreeItem<>("");
-
-    public void setFolderRoot(EmailTreeItem<String> folderRoot) {
-        this.folderRoot = folderRoot;
-    }
+    private final EmailTreeItem<String> folderRoot = new EmailTreeItem<>("");
 
     public EmailTreeItem<String> getFolderRoot() {
         return folderRoot;

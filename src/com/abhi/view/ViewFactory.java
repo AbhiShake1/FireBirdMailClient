@@ -94,7 +94,7 @@ public class ViewFactory {
             Scene scene = stage.getScene();
             scene.getStylesheets().clear(); //clear previous css
             scene.getStylesheets().add(getClass().getResource(BackgroundTheme.getCssPath(theme)).toExternalForm());
-            //don't need to assert null because it will crash if null
+            //don't need to assert not null because it will crash if null
             scene.getStylesheets().add(getClass().getResource(FontSize.getCssPath(fontSize)).toExternalForm());
         }
     }
