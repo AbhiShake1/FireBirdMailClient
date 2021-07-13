@@ -34,7 +34,7 @@ public class LoginWindowController extends BaseController {
                 EmailLoginResult emailLoginResult = loginService.getValue();
                 switch (emailLoginResult){
                     case SUCCESS:
-                        if (viewFactory.isMainViewInitialized()){
+                        if (!viewFactory.isMainViewInitialized()){
                             viewFactory.showMainWindow();
                         }
                         //using any one of the login scene elements to get stage out of it
