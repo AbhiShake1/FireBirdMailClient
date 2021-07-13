@@ -3,6 +3,7 @@ package com.abhi.controller;
 import com.abhi.EmailManager;
 import com.abhi.model.EmailMessage;
 import com.abhi.model.EmailTreeItem;
+import com.abhi.model.SizeInteger;
 import com.abhi.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -42,7 +43,7 @@ public class MainWindowController extends BaseController implements Initializabl
     private TableColumn<EmailMessage, String> recipientCol;
 
     @FXML
-    private TableColumn<EmailMessage, Integer> sizeCol;
+    private TableColumn<EmailMessage, SizeInteger> sizeCol;
 
     @FXML
     private TableColumn<EmailMessage, Date> dateCol;
