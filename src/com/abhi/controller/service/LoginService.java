@@ -3,10 +3,12 @@ package com.abhi.controller.service;
 import com.abhi.EmailManager;
 import com.abhi.controller.EmailLoginResult;
 import com.abhi.model.EmailAccount;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 
 import javax.mail.*;
 
-public class LoginService {
+public class LoginService extends Service<EmailLoginResult> {
 
     EmailAccount emailAccount;
     EmailManager emailManager;
@@ -16,7 +18,7 @@ public class LoginService {
         this.emailManager = emailManager;
     }
 
-    public EmailLoginResult login(){
+    private EmailLoginResult login(){
         Authenticator authenticator = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -45,5 +47,15 @@ public class LoginService {
         }
         //if noting goes wrong
         return EmailLoginResult.SUCCESS;
+    }
+
+    @Override
+    protected Task<EmailLoginResult> createTask() {
+        return new Task<>() {
+            @Override
+            protected EmailLoginResult call() {
+                return login();
+            }
+        };
     }
 }
