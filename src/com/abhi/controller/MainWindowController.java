@@ -1,6 +1,7 @@
 package com.abhi.controller;
 
 import com.abhi.EmailManager;
+import com.abhi.controller.service.MessageRendererService;
 import com.abhi.model.EmailMessage;
 import com.abhi.model.EmailTreeItem;
 import com.abhi.model.SizeInteger;
@@ -58,6 +59,8 @@ public class MainWindowController extends BaseController implements Initializabl
         viewFactory.showLoginWindow();
     }
 
+    private MessageRendererService messageRendererService;
+
     private void setUpEmailsTreeView() {
         emailsTreeView.setRoot(emailManager.getFolderRoot());
         emailsTreeView.setShowRoot(false);
@@ -96,11 +99,27 @@ public class MainWindowController extends BaseController implements Initializabl
         });
     }
 
+    private void setUpMessageRendererService() {
+        messageRendererService = new MessageRendererService(emailsWebView.getEngine());
+    }
+
+    private void setUpMessageSelection() {
+        emailsTableView.setOnMouseClicked(e->{
+            EmailMessage emailMessage = emailsTableView.getSelectionModel().getSelectedItem();
+            if(emailMessage != null){
+                messageRendererService.setEmailMessage(emailMessage);
+                messageRendererService.restart(); //start() can not be called twice in sequence anyhow
+            }
+        });
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setUpEmailsTreeView();
         setUpTableView();
         setUpFolderSelection();
         setUpBoldRows();
+        setUpMessageRendererService();
+        setUpMessageSelection();
     }
 }
