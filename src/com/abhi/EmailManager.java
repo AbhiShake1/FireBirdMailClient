@@ -29,16 +29,8 @@ public class EmailManager {
         folderUpdaterService.start();
     }
 
-    public EmailMessage getSelectedMessage() {
-        return selectedMessage;
-    }
-
     public void setSelectedMessage(EmailMessage selectedMessage) {
         this.selectedMessage = selectedMessage;
-    }
-
-    public EmailTreeItem<String> getSelectedFolder() {
-        return selectedFolder;
     }
 
     public void setSelectedFolder(EmailTreeItem<String> selectedFolder) {
@@ -61,6 +53,25 @@ public class EmailManager {
             selectedMessage.setRead(true);
             selectedMessage.getMessage().setFlag(Flags.Flag.SEEN, true);
             selectedFolder.decrementMessagesCount();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void setUnRead() {
+        try{
+            selectedMessage.setRead(false);
+            selectedMessage.getMessage().setFlag(Flags.Flag.SEEN, false);//server side
+            selectedFolder.incrementMessagesCount();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteMessage() {
+        try{
+            selectedMessage.getMessage().setFlag(Flags.Flag.DELETED, true); //say that msg was deleted to server
+            selectedFolder.getEmailMessages().remove(selectedMessage);
         }catch (Exception e){
             e.printStackTrace();
         }

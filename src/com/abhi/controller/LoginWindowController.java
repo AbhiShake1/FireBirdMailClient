@@ -32,22 +32,20 @@ public class LoginWindowController extends BaseController {
             loginService.start(); //start background task thread to avoid unresponsive UI or a small time while logging in
             loginService.setOnSucceeded(e->{
                 EmailLoginResult emailLoginResult = loginService.getValue();
-                switch (emailLoginResult){
-                    case SUCCESS:
-                        if (!viewFactory.isMainViewInitialized()){
+                switch (emailLoginResult) {
+                    case SUCCESS -> {
+                        if (!viewFactory.isMainViewInitialized()) {
                             viewFactory.showMainWindow();
                         }
                         //using any one of the login scene elements to get stage out of it
                         Stage stage = (Stage) emailField.getScene().getWindow();
                         //close previous stage to avoid having 2 stages opened at once
                         viewFactory.close(stage); //link all view actions to ViewFactory instead of writing here to maintain proper pattern
-                        return;
-                    case FAILED_BY_CREDENTIALS:
+                    }
+                    case FAILED_BY_CREDENTIALS -> {
                         errorLabel.setText("Invalid credentials");
-                        return;
-                    case FAILED_BY_UNEXPECTED_ERROR:
-                        errorLabel.setText("Unexpected error");
-                    default:
+                    }
+                    case FAILED_BY_UNEXPECTED_ERROR -> errorLabel.setText("Unexpected error");
                 }
             });
         }

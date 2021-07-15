@@ -1,6 +1,5 @@
 package com.abhi.model;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -21,34 +20,24 @@ public class EmailMessage {
         this.subject = new SimpleStringProperty(subject);
         this.sender = new SimpleStringProperty(sender);
         this.recipient = new SimpleStringProperty(recipient);
-        this.size = new SimpleObjectProperty(new SizeInteger(size));
+        this.size = new SimpleObjectProperty<>(new SizeInteger(size));
         this.date = new SimpleObjectProperty<>(date);
         this.isRead = isRead;
         this.message = message;
     }
 
+    //these getters must not be removed as they are accessed using value factory in MainWindowController
+    //they are not 'unused'
     public String getSubject() {
         return subject.get();
-    }
-
-    public SimpleStringProperty subjectProperty() {
-        return subject;
     }
 
     public String getSender() {
         return sender.get();
     }
 
-    public SimpleStringProperty senderProperty() {
-        return sender;
-    }
-
     public String getRecipient() {
         return recipient.get();
-    }
-
-    public SimpleStringProperty recipientProperty() {
-        return recipient;
     }
 
     public SizeInteger getSize() {
@@ -57,10 +46,6 @@ public class EmailMessage {
 
     public Date getDate() {
         return date.get();
-    }
-
-    public SimpleObjectProperty<Date> dateProperty() {
-        return date;
     }
 
     public boolean isRead() {

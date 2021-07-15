@@ -8,10 +8,7 @@ import com.abhi.model.SizeInteger;
 import com.abhi.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebView;
 
@@ -61,6 +58,10 @@ public class MainWindowController extends BaseController implements Initializabl
 
     private MessageRendererService messageRendererService;
 
+    private MenuItem markUnReadMenuItem = new MenuItem("mark as unread");
+
+    private MenuItem deleteMessageMenuItem = new MenuItem("delete message");
+
     private void setUpEmailsTreeView() {
         emailsTreeView.setRoot(emailManager.getFolderRoot());
         emailsTreeView.setShowRoot(false);
@@ -72,6 +73,8 @@ public class MainWindowController extends BaseController implements Initializabl
         recipientCol.setCellValueFactory(new PropertyValueFactory<>("Recipient"));
         sizeCol.setCellValueFactory(new PropertyValueFactory<>("Size"));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("Date"));
+
+        emailsTableView.setContextMenu(new ContextMenu(markUnReadMenuItem, deleteMessageMenuItem));
     }
 
     private void setUpFolderSelection() {
@@ -117,6 +120,13 @@ public class MainWindowController extends BaseController implements Initializabl
         });
     }
 
+    private void setUpContextMenu() {
+        markUnReadMenuItem.setOnAction(e->emailManager.setUnRead());
+        deleteMessageMenuItem.setOnAction(e->{emailManager.deleteMessage();
+            emailsWebView.getEngine().loadContent(""); //not be able to visualize message after deleting
+        });
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setUpEmailsTreeView();
@@ -125,5 +135,6 @@ public class MainWindowController extends BaseController implements Initializabl
         setUpBoldRows();
         setUpMessageRendererService();
         setUpMessageSelection();
+        setUpContextMenu();
     }
 }
