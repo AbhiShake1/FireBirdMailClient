@@ -1,9 +1,10 @@
 package com.abhi.model;
 
-public record SizeInteger(int size) implements Comparable<SizeInteger> {
+public final record SizeInteger(int size) implements Comparable<SizeInteger> {
+//records are not meant to be altered
 
     @Override
-    public String toString() {
+    public final String toString() {
         if (size <= 0) {
             return "0";
         } else if (size < 1024) {
@@ -17,7 +18,7 @@ public record SizeInteger(int size) implements Comparable<SizeInteger> {
 
     //sort by size
     @Override
-    public int compareTo(SizeInteger sizeInteger) { //0, 1 or -1
+    public final int compareTo(SizeInteger sizeInteger) { //0, 1 or -1
         return Integer.compare(size, sizeInteger.size);
     }
 }

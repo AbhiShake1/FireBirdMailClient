@@ -56,6 +56,11 @@ public class MainWindowController extends BaseController implements Initializabl
         viewFactory.showLoginWindow();
     }
 
+    @FXML
+    void composeMessageAction() {
+        viewFactory.showComposeMessageWindow();
+    }
+
     private MessageRendererService messageRendererService;
 
     private MenuItem markUnReadMenuItem = new MenuItem("mark as unread");

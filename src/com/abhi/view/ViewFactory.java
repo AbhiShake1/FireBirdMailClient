@@ -1,10 +1,7 @@
 package com.abhi.view;
 
 import com.abhi.EmailManager;
-import com.abhi.controller.BaseController;
-import com.abhi.controller.LoginWindowController;
-import com.abhi.controller.MainWindowController;
-import com.abhi.controller.OptionsWindowController;
+import com.abhi.controller.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -44,6 +41,11 @@ public class ViewFactory {
 
     public void showOptionsWindow(){
         BaseController controller = new OptionsWindowController(emailManager, this, "OptionsWindow.fxml");
+        initializeStage(controller);
+    }
+
+    public void showComposeMessageWindow(){
+        BaseController controller = new ComposeMessageController(emailManager, this, "ComposeMessageWindow.fxml");
         initializeStage(controller);
     }
 
