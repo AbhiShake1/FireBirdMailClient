@@ -15,7 +15,9 @@ import javafx.scene.web.WebView;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeBodyPart;
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
@@ -77,22 +79,20 @@ public class EmailDetailsController extends BaseController implements Initializa
 
     private class AttachmentButton extends Button{
 
-        private String downloadedFilePath;
+        private final String downloadedFilePath;
 
         private final MimeBodyPart mimeBodyPart;
 
         public AttachmentButton(MimeBodyPart mimeBodyPart) throws MessagingException {
             this.mimeBodyPart = mimeBodyPart;
-            setText(mimeBodyPart.getFileName());
-            downloadedFilePath = DIRECTORY_DOWNLOADS + mimeBodyPart.getFileName();
+            StringBuilder downloadText = new StringBuilder(mimeBodyPart.getFileName());
+            downloadedFilePath = DIRECTORY_DOWNLOADS + downloadText;
+            if(new File(downloadedFilePath).exists()) downloadText.append("(open)");
+            setText(downloadText.toString());
             setOnAction(e->downloadAttachment());
         }
 
-        private int fileNum = 1; //so that it maintains its value in the session
-        private String moddedDownloadPath;
-
         private void downloadAttachment(){
-            setText("Downloading..");
             setDisabled(true); //dont allow clicking buttons while content is downloading
             //multithreading since the process might take a long time
             Service<Void> service = new Service<>() {
@@ -102,12 +102,17 @@ public class EmailDetailsController extends BaseController implements Initializa
                         @Override
                         protected Void call() throws Exception {
                             File file = new File(downloadedFilePath);
-                            while(file.exists()){ //keep adding '(1)' if file already exists
-                                moddedDownloadPath = downloadedFilePath + "("+fileNum+")";
-                                file = new File(moddedDownloadPath);
-                                fileNum++;
+                            Desktop desktop = Desktop.getDesktop();
+                            if(file.exists()){
+                                try {
+                                    desktop.open(file); //might have problems with mac
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
+                                }
+                            }else{
+                                setText("Downloading..");
+                                mimeBodyPart.saveFile(downloadedFilePath);
                             }
-                            mimeBodyPart.saveFile(moddedDownloadPath);
                             return null;
                         }
                     };
@@ -115,7 +120,7 @@ public class EmailDetailsController extends BaseController implements Initializa
             };
             service.setOnSucceeded(e->{
                 try {
-                    setText(mimeBodyPart.getFileName());
+                    setText(mimeBodyPart.getFileName() + "(open)");
                     setDisabled(false);
                 } catch (MessagingException messagingException) {
                     messagingException.printStackTrace();
