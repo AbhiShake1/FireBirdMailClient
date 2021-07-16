@@ -5,9 +5,7 @@ import com.abhi.controller.service.LoginService;
 import com.abhi.model.EmailAccount;
 import com.abhi.view.ViewFactory;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class LoginWindowController extends BaseController {
@@ -16,7 +14,7 @@ public class LoginWindowController extends BaseController {
     private TextField emailField;
 
     @FXML
-    private TextField passwordField;
+    private PasswordField passwordField;
 
     @FXML
     private Label errorLabel;
@@ -24,8 +22,25 @@ public class LoginWindowController extends BaseController {
     @FXML
     private Button loginButton;
 
+    @FXML
+    CheckBox showPasswordCheckBox;
+
+    @FXML
+    TextField passwordFieldVisible;
+
     public LoginWindowController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
         super(emailManager, viewFactory, fxmlName);
+    }
+
+    @FXML
+    private void showPasswordAction() {
+        if(showPasswordCheckBox.isSelected()){
+            passwordFieldVisible.setText(passwordField.getText());
+            passwordFieldVisible.setVisible(true);
+        }else {
+            passwordField.setText(passwordFieldVisible.getText());
+            passwordFieldVisible.setVisible(false);
+        }
     }
 
     @FXML
