@@ -29,7 +29,7 @@ public class LoginWindowController extends BaseController {
     }
 
     @FXML
-    void loginButtonAction() {
+    private void loginButtonAction() {
         if(isFieldValid()){
             EmailAccount emailAccount = new EmailAccount(emailField.getText(), passwordField.getText());
             LoginService loginService = new LoginService(emailAccount,emailManager);

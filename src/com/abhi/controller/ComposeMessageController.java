@@ -67,7 +67,7 @@ public class ComposeMessageController extends BaseController implements Initiali
     }
 
     @FXML
-    void attachButtonAction(){
+    private void attachButtonAction(){
         //open file chooser
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(null);

@@ -47,17 +47,17 @@ public class MainWindowController extends BaseController implements Initializabl
     private TableColumn<EmailMessage, Date> dateCol;
 
     @FXML
-    void optionsAction() {
+    private void optionsAction() {
         viewFactory.showOptionsWindow();
     }
 
     @FXML
-    void addAccountAction() {
+    private void addAccountAction() {
         viewFactory.showLoginWindow();
     }
 
     @FXML
-    void composeMessageAction() {
+    private void composeMessageAction() {
         viewFactory.showComposeMessageWindow();
     }
 

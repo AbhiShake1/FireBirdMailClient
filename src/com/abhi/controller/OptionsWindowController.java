@@ -28,14 +28,14 @@ public class OptionsWindowController extends BaseController implements Initializ
     private ChoiceBox<BackgroundTheme> themePicker;
 
     @FXML
-    void applyButtonAction() {
+    private void applyButtonAction() {
         viewFactory.setBackgroundTheme(themePicker.getValue());
         viewFactory.setFontSize(FontSize.values()[(int)fontSizePicker.getValue()]);
         viewFactory.updateAllStyles();
     }
 
     @FXML
-    void cancelButtonAction() {
+    private void cancelButtonAction() {
         Stage stage = (Stage) fontSizePicker.getScene().getWindow(); //random element of stage to find its parent.
                                                                 //any element belonging to the required stage should work
         viewFactory.close(stage);
