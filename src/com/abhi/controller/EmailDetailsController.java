@@ -88,8 +88,12 @@ public class EmailDetailsController extends BaseController implements Initializa
             setOnAction(e->downloadAttachment());
         }
 
+        private int fileNum = 1; //so that it maintains its value in the session
+        private String moddedDownloadPath;
+
         private void downloadAttachment(){
             setText("Downloading..");
+            setDisabled(true); //dont allow clicking buttons while content is downloading
             //multithreading since the process might take a long time
             Service<Void> service = new Service<>() {
                 @Override
@@ -98,11 +102,12 @@ public class EmailDetailsController extends BaseController implements Initializa
                         @Override
                         protected Void call() throws Exception {
                             File file = new File(downloadedFilePath);
-                            while(file.exists()){ //keep adding (1) if file exists
-                                downloadedFilePath+="(1)";
-                                file = new File(downloadedFilePath);
+                            while(file.exists()){ //keep adding '(1)' if file already exists
+                                moddedDownloadPath = downloadedFilePath + "("+fileNum+")";
+                                file = new File(moddedDownloadPath);
+                                fileNum++;
                             }
-                            mimeBodyPart.saveFile(downloadedFilePath);
+                            mimeBodyPart.saveFile(moddedDownloadPath);
                             return null;
                         }
                     };
@@ -111,6 +116,7 @@ public class EmailDetailsController extends BaseController implements Initializa
             service.setOnSucceeded(e->{
                 try {
                     setText(mimeBodyPart.getFileName());
+                    setDisabled(false);
                 } catch (MessagingException messagingException) {
                     messagingException.printStackTrace();
                 }
