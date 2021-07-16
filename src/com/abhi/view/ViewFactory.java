@@ -57,8 +57,10 @@ public class ViewFactory {
 
     //handling view options
     private final Preference preference = Preference.getInstance();
-    private BackgroundTheme theme = BackgroundTheme.values()[preference.getInt("pref_background_key")];
-    private FontSize fontSize = FontSize.values()[preference.getInt("pref_font_size_key")];
+    private BackgroundTheme theme = BackgroundTheme.values()[preference.getInt("pref_background_key",
+            BackgroundTheme.DEFAULT.ordinal())];
+    private FontSize fontSize = FontSize.values()[preference.getInt("pref_font_size_key",
+            FontSize.MEDIUM.ordinal())];
 
     public BackgroundTheme getBackgroundTheme() {
         return theme;

@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class ValidAccount implements Serializable { //let class object be saved to bytestream
 
-    private String address;
-    private String password;
+    private final String address;
+    private String password; //only encrypt password while saving
 
     public ValidAccount(String address, String password) {
         this.address = address;

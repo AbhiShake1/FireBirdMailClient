@@ -17,11 +17,11 @@ public class Preference {
         return preference;
     }
 
-    public void setInt(String key, int value){
-        preferences.putInt(key, value);
+    public void setValue(String key, String value){
+        preferences.put(key, value);
     }
 
-    public int getInt(String key){
-        return preferences.getInt(key, 0);
+    public int getInt(String key, int defaultValue){
+        return preferences.getInt(key, defaultValue);
     }
 }

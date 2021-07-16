@@ -44,7 +44,7 @@ public class ComposeMessageController extends BaseController implements Initiali
     private final List<File> attachments = new ArrayList<>();
 
     @FXML
-    void sendButtonAction() {
+    private void sendButtonAction() {
         EmailSenderService emailSenderService = new EmailSenderService(
                 emailAccountChoice.getValue(),
                 subjectTextField.getText(),

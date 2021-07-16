@@ -31,9 +31,9 @@ public class OptionsWindowController extends BaseController implements Initializ
     @FXML
     private void applyButtonAction() {
         Preference pref = Preference.getInstance();
-        pref.setInt("pref_background_key",themePicker.getValue().ordinal());
+        pref.setValue("pref_background_key",String.valueOf(themePicker.getValue().ordinal()));
         viewFactory.setBackgroundTheme(themePicker.getValue());
-        pref.setInt("pref_font_size_key",(int)fontSizePicker.getValue());
+        pref.setValue("pref_font_size_key",String.valueOf((int)fontSizePicker.getValue()));
         viewFactory.setFontSize(FontSize.values()[(int)fontSizePicker.getValue()]);
         viewFactory.updateAllStyles();
     }

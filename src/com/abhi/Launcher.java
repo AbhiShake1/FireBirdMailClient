@@ -20,7 +20,6 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) {
         ViewFactory viewFactory = new ViewFactory(emailManager);
         checkPersistence(viewFactory);
-        viewFactory.updateAllStyles();
     }
 
     private void checkPersistence(ViewFactory viewFactory) {
