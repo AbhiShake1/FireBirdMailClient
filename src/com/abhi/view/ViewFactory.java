@@ -98,7 +98,7 @@ public class ViewFactory {
     }
 
     public void updateAllStyles(){
-        for(Stage stage : activeStages) updateStyles(stage.getScene());
+        activeStages.forEach(stage->updateStyles(stage.getScene()));
     }
 
     public void updateStyles(Scene scene) {

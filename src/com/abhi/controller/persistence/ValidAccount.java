@@ -16,10 +16,6 @@ public class ValidAccount implements Serializable { //let class object be saved 
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getPassword() {
         return password;
     }
