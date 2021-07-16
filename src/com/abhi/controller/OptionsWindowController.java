@@ -1,6 +1,7 @@
 package com.abhi.controller;
 
 import com.abhi.EmailManager;
+import com.abhi.controller.persistence.Preference;
 import com.abhi.view.BackgroundTheme;
 import com.abhi.view.FontSize;
 import com.abhi.view.ViewFactory;
@@ -29,7 +30,10 @@ public class OptionsWindowController extends BaseController implements Initializ
 
     @FXML
     private void applyButtonAction() {
+        Preference pref = Preference.getInstance();
+        pref.setInt("pref_background_key",themePicker.getValue().ordinal());
         viewFactory.setBackgroundTheme(themePicker.getValue());
+        pref.setInt("pref_font_size_key",(int)fontSizePicker.getValue());
         viewFactory.setFontSize(FontSize.values()[(int)fontSizePicker.getValue()]);
         viewFactory.updateAllStyles();
     }

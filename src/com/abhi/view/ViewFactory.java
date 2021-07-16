@@ -2,6 +2,7 @@ package com.abhi.view;
 
 import com.abhi.EmailManager;
 import com.abhi.controller.*;
+import com.abhi.controller.persistence.Preference;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -55,8 +56,9 @@ public class ViewFactory {
     }
 
     //handling view options
-    private BackgroundTheme theme = BackgroundTheme.DEFAULT;
-    private FontSize fontSize = FontSize.MEDIUM;
+    private final Preference preference = Preference.getInstance();
+    private BackgroundTheme theme = BackgroundTheme.values()[preference.getInt("pref_background_key")];
+    private FontSize fontSize = FontSize.values()[preference.getInt("pref_font_size_key")];
 
     public BackgroundTheme getBackgroundTheme() {
         return theme;
