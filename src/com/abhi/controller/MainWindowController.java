@@ -67,6 +67,8 @@ public class MainWindowController extends BaseController implements Initializabl
 
     private final MenuItem deleteMessageMenuItem = new MenuItem("delete message");
 
+    private final MenuItem showMessageDetailsMenuItem = new MenuItem("view details");
+
     private void setUpEmailsTreeView() {
         emailsTreeView.setRoot(emailManager.getFolderRoot());
         emailsTreeView.setShowRoot(false);
@@ -79,12 +81,12 @@ public class MainWindowController extends BaseController implements Initializabl
         sizeCol.setCellValueFactory(new PropertyValueFactory<>("Size"));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("Date"));
 
-        emailsTableView.setContextMenu(new ContextMenu(markUnReadMenuItem, deleteMessageMenuItem));
+        emailsTableView.setContextMenu(new ContextMenu(markUnReadMenuItem, deleteMessageMenuItem, showMessageDetailsMenuItem));
     }
 
     private void setUpFolderSelection() {
         emailsTreeView.setOnMouseClicked(e->{ //click of mouse, touchpad
-            EmailTreeItem<String> item = (EmailTreeItem<String>) emailsTreeView.getSelectionModel().getSelectedItem();
+            EmailTreeItem item = (EmailTreeItem) emailsTreeView.getSelectionModel().getSelectedItem();
             if(item != null){
                 emailManager.setSelectedFolder(item);
                 emailsTableView.setItems(item.getEmailMessages());
@@ -127,9 +129,11 @@ public class MainWindowController extends BaseController implements Initializabl
 
     private void setUpContextMenu() {
         markUnReadMenuItem.setOnAction(e->emailManager.setUnRead());
-        deleteMessageMenuItem.setOnAction(e->{emailManager.deleteMessage();
+        deleteMessageMenuItem.setOnAction(e->{
+            emailManager.deleteMessage();
             emailsWebView.getEngine().loadContent(""); //not be able to visualize message after deleting
         });
+        showMessageDetailsMenuItem.setOnAction(e->viewFactory.showEmailDetailsWindow());
     }
 
     @Override

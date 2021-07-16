@@ -16,13 +16,13 @@ import java.util.List;
 public class FetchFolderService extends Service<Void> { //void return type. 'Void' is a special wrapper class
 
     private final Store store;
-    private final EmailTreeItem<String> foldersRoot;
+    private final EmailTreeItem foldersRoot;
 
     private final List<Folder> folderList;
 
     private final IconResolver iconResolver = new IconResolver();
 
-    public FetchFolderService(Store store, EmailTreeItem<String> treeItem, List<Folder> folderList) {
+    public FetchFolderService(Store store, EmailTreeItem treeItem, List<Folder> folderList) {
         this.store = store;
         foldersRoot = treeItem;
         this.folderList = folderList;
@@ -44,10 +44,10 @@ public class FetchFolderService extends Service<Void> { //void return type. 'Voi
         handleFolders(folders, foldersRoot);
     }
 
-    private void handleFolders(Folder[] folders, EmailTreeItem<String> foldersRoot) throws MessagingException {
+    private void handleFolders(Folder[] folders, EmailTreeItem foldersRoot) throws MessagingException {
         for(Folder folder : folders){
             folderList.add(folder);
-            EmailTreeItem<String> emailTreeItem = new EmailTreeItem<>(folder.getName());
+            EmailTreeItem emailTreeItem = new EmailTreeItem(folder.getName());
             emailTreeItem.setGraphic(iconResolver.getIconForFolder(folder.getName()));
             foldersRoot.getChildren().add(emailTreeItem);
             foldersRoot.setExpanded(true);
@@ -60,7 +60,7 @@ public class FetchFolderService extends Service<Void> { //void return type. 'Voi
         }
     }
 
-    private void addMessageListenerToFolder(Folder folder, EmailTreeItem<String> emailTreeItem){
+    private void addMessageListenerToFolder(Folder folder, EmailTreeItem emailTreeItem){
         folder.addMessageCountListener(new MessageCountListener() {
             @Override
             public void messagesAdded(MessageCountEvent messageCountEvent) {
@@ -81,13 +81,13 @@ public class FetchFolderService extends Service<Void> { //void return type. 'Voi
         });
     }
 
-    private void fetchMessageOnFolder(Folder folder, EmailTreeItem<String> emailTreeItem) {
-        Service<String> fetchFolderService = new Service<>() {
+    private void fetchMessageOnFolder(Folder folder, EmailTreeItem emailTreeItem) {
+        Service<Void> fetchFolderService = new Service<>() {
             @Override
-            protected Task<String> createTask() {
+            protected Task<Void> createTask() {
                 return new Task<>() {
                     @Override
-                    protected String call() throws Exception {
+                    protected Void call() throws Exception {
                         if(folder.getType() != Folder.HOLDS_FOLDERS){
                             folder.open(Folder.READ_WRITE);
                             int folderSize = folder.getMessageCount();

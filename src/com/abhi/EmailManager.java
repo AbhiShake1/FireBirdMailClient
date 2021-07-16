@@ -18,12 +18,12 @@ public class EmailManager {
 
     private EmailMessage selectedMessage;
 
-    private EmailTreeItem<String> selectedFolder;
+    private EmailTreeItem selectedFolder;
 
     FolderUpdaterService folderUpdaterService;
 
     //handling folders
-    private final EmailTreeItem<String> folderRoot = new EmailTreeItem<>("");
+    private final EmailTreeItem folderRoot = new EmailTreeItem("");
 
     private final List<Folder> folderList = new ArrayList<>();
 
@@ -44,17 +44,17 @@ public class EmailManager {
         this.selectedMessage = selectedMessage;
     }
 
-    public void setSelectedFolder(EmailTreeItem<String> selectedFolder) {
+    public void setSelectedFolder(EmailTreeItem selectedFolder) {
         this.selectedFolder = selectedFolder;
     }
 
-    public EmailTreeItem<String> getFolderRoot() {
+    public EmailTreeItem getFolderRoot() {
         return folderRoot;
     }
 
     public void addEmailAccount(EmailAccount emailAccount){
         emailAccounts.add(emailAccount);
-        EmailTreeItem<String> treeItem = new EmailTreeItem<>(emailAccount.getAddress());
+        EmailTreeItem treeItem = new EmailTreeItem(emailAccount.getAddress());
         treeItem.setGraphic(iconResolver.getIconForFolder(emailAccount.getAddress()));
         FetchFolderService fetchFolderService = new FetchFolderService(emailAccount.getStore(), treeItem, folderList);
         fetchFolderService.start();
@@ -88,5 +88,9 @@ public class EmailManager {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public EmailMessage getSelectedMessage() {
+        return selectedMessage;
     }
 }

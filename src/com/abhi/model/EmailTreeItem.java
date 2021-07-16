@@ -8,13 +8,13 @@ import javax.mail.Flags;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 
-public class EmailTreeItem<Str> extends TreeItem<Str> {
+public class EmailTreeItem extends TreeItem<String> {
 
-    private final Str name;
+    private final String name;
     private final ObservableList<EmailMessage> emailMessages;
     private int unreadMessagesCount;
 
-    public EmailTreeItem(Str name) {
+    public EmailTreeItem(String name) {
         super(name);
         this.name = name;
         this.emailMessages = FXCollections.observableArrayList();
@@ -61,7 +61,7 @@ public class EmailTreeItem<Str> extends TreeItem<Str> {
 
     private void updateName(){
         if(unreadMessagesCount>0){
-            setValue((Str) (name+"("+unreadMessagesCount+")"));
+            setValue(name+"("+unreadMessagesCount+")");
         }else{
             setValue(name);
         }

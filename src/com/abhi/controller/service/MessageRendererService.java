@@ -9,6 +9,7 @@ import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
 import java.io.IOException;
 
 public class MessageRendererService extends Service<String> {
@@ -34,15 +35,25 @@ public class MessageRendererService extends Service<String> {
         Message message = emailMessage.getMessage();
         String contentType = message.getContentType();
         if(isSimpleType(contentType)){
-            stringBuffer.append(message.getContent());
-        }else if(isMultipartType(contentType)){
+            stringBuffer.append(message.getContent().toString());
+        } else if(isMultipartType(contentType)){
             Multipart multipart = (Multipart) message.getContent();
-            for(int i = multipart.getCount()-1;i >= 0;i--){
-                BodyPart bodyPart = multipart.getBodyPart(i);
-                String bodyPartContentType = bodyPart.getContentType();
-                if(isSimpleType(bodyPartContentType)){
-                    stringBuffer.append(bodyPart.getContent());
-                }
+            loadMultipart(multipart, stringBuffer);
+        }
+    }
+
+    private void loadMultipart(Multipart multipart, StringBuffer stringBuffer) throws MessagingException, IOException {
+        for (int i = multipart.getCount() - 1; i >= 0; i--) {
+            BodyPart bodyPart = multipart.getBodyPart(i);
+            String contentType = bodyPart.getContentType();
+            if (isSimpleType(contentType)) {
+                stringBuffer.append(bodyPart.getContent().toString());
+            } else if (isMultipartType(contentType)) {
+                Multipart multipart2 = (Multipart) bodyPart.getContent();
+                loadMultipart(multipart2, stringBuffer);
+            } else if (!isTextPlain(contentType)) {//get attachments
+                MimeBodyPart mimeBodyPart = (MimeBodyPart) bodyPart;
+                emailMessage.addAttachment(mimeBodyPart);
             }
         }
     }
@@ -53,6 +64,10 @@ public class MessageRendererService extends Service<String> {
 
     private boolean isMultipartType(String contentType){
         return contentType.contains("multipart");
+    }
+
+    private boolean isTextPlain(String contentType){
+        return contentType.contains("TEXT/PLAIN");
     }
 
     private void displayMessage(){

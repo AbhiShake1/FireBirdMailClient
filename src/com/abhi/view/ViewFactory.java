@@ -49,6 +49,11 @@ public class ViewFactory {
         initializeStage(controller);
     }
 
+    public void showEmailDetailsWindow(){
+        BaseController controller = new EmailDetailsController(emailManager, this, "EmailDetailsWindow.fxml");
+        initializeStage(controller);
+    }
+
     //handling view options
     private BackgroundTheme theme = BackgroundTheme.DEFAULT;
     private FontSize fontSize = FontSize.MEDIUM;

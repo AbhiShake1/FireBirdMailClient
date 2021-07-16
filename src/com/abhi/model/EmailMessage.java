@@ -4,7 +4,10 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import javax.mail.Message;
+import javax.mail.internet.MimeBodyPart;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class EmailMessage {
 
@@ -15,6 +18,8 @@ public class EmailMessage {
     private final SimpleObjectProperty<Date> date;
     private boolean isRead;
     private final Message message;
+    private final List<MimeBodyPart> attachmentList = new ArrayList<>();
+    private boolean hasAttachments; //to reduce execution time
 
     public  EmailMessage(String subject, String sender, String recipient, int size, Date date, boolean isRead, Message message){
         this.subject = new SimpleStringProperty(subject);
@@ -24,6 +29,20 @@ public class EmailMessage {
         this.date = new SimpleObjectProperty<>(date);
         this.isRead = isRead;
         this.message = message;
+    }
+
+    public boolean isHasAttachments() {
+        return hasAttachments;
+    }
+
+    public List<MimeBodyPart> getAttachmentList() {
+        return attachmentList;
+    }
+
+    public void addAttachment(MimeBodyPart mimeBodyPart){
+        hasAttachments = true;
+        attachmentList.add(mimeBodyPart);
+
     }
 
     //these getters must not be removed as they are accessed using value factory in MainWindowController
