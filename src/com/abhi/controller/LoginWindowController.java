@@ -42,9 +42,7 @@ public class LoginWindowController extends BaseController {
                         //close previous stage to avoid having 2 stages opened at once
                         viewFactory.close(stage); //link all view actions to ViewFactory instead of writing here to maintain proper pattern
                     }
-                    case FAILED_BY_CREDENTIALS -> {
-                        errorLabel.setText("Invalid credentials");
-                    }
+                    case FAILED_BY_CREDENTIALS -> errorLabel.setText("Invalid credentials");
                     case FAILED_BY_UNEXPECTED_ERROR -> errorLabel.setText("Unexpected error");
                 }
             });

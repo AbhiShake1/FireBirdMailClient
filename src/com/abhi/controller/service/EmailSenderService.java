@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMultipart;
 
 public class EmailSenderService extends Service<EmailSendingResult> {
 
-    private EmailAccount emailAccount;
+    private final EmailAccount emailAccount;
     private final String subject, recipient, content;
 
     public EmailSenderService(EmailAccount emailAccount, String subject, String recipient, String content) {

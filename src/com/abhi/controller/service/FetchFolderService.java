@@ -20,7 +20,7 @@ public class FetchFolderService extends Service<Void> { //void return type. 'Voi
 
     private final List<Folder> folderList;
 
-    private IconResolver iconResolver = new IconResolver();
+    private final IconResolver iconResolver = new IconResolver();
 
     public FetchFolderService(Store store, EmailTreeItem<String> treeItem, List<Folder> folderList) {
         this.store = store;
@@ -52,6 +52,7 @@ public class FetchFolderService extends Service<Void> { //void return type. 'Voi
             foldersRoot.getChildren().add(emailTreeItem);
             foldersRoot.setExpanded(true);
             fetchMessageOnFolder(folder, emailTreeItem);
+            addMessageListenerToFolder(folder, emailTreeItem);
             if(folder.getType()==Folder.HOLDS_FOLDERS){
                 Folder[] subFolders = folder.list();
                 handleFolders(subFolders, emailTreeItem); //performance untested. recursion might make it slow

@@ -6,19 +6,19 @@ import javafx.concurrent.Task;
 import javax.mail.Folder;
 import java.util.List;
 
-public class FolderUpdaterService extends Service {
+public class FolderUpdaterService extends Service<Folder> {
 
-    private List<Folder> folderList;
+    private final List<Folder> folderList;
 
     public FolderUpdaterService(List<Folder> folderList) {
         this.folderList = folderList;
     }
 
     @Override
-    protected Task createTask() {
-        return new Task() {
+    protected Task<Folder> createTask() {
+        return new Task<>() {
             @Override
-            protected Object call() {
+            protected Folder call() {
                 while(true){//infinite since it always needs to run and scan at runtime
                     //to not break the loop even when exception is thrown
                     try {

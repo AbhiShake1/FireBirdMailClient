@@ -60,10 +60,10 @@ public class MessageRendererService extends Service<String> {
     }
 
     @Override
-    protected Task createTask() {
+    protected Task<String> createTask() {
         return new Task<>() {
             @Override
-            protected Object call() {
+            protected String call() {
                 try {
                     loadMessage();
                 }catch (Exception e){

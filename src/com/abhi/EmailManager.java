@@ -29,7 +29,7 @@ public class EmailManager {
 
     private final ObservableList<EmailAccount> emailAccounts = FXCollections.observableArrayList();
 
-    private IconResolver iconResolver = new IconResolver();
+    private final IconResolver iconResolver = new IconResolver();
 
     public EmailManager() {
         folderUpdaterService = new FolderUpdaterService(folderList);

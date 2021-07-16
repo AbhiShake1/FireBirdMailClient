@@ -63,9 +63,9 @@ public class MainWindowController extends BaseController implements Initializabl
 
     private MessageRendererService messageRendererService;
 
-    private MenuItem markUnReadMenuItem = new MenuItem("mark as unread");
+    private final MenuItem markUnReadMenuItem = new MenuItem("mark as unread");
 
-    private MenuItem deleteMessageMenuItem = new MenuItem("delete message");
+    private final MenuItem deleteMessageMenuItem = new MenuItem("delete message");
 
     private void setUpEmailsTreeView() {
         emailsTreeView.setRoot(emailManager.getFolderRoot());
