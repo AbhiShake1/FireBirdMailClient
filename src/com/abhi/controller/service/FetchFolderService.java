@@ -1,6 +1,7 @@
 package com.abhi.controller.service;
 
 import com.abhi.model.EmailTreeItem;
+import com.abhi.view.IconResolver;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
@@ -18,6 +19,8 @@ public class FetchFolderService extends Service<Void> { //void return type. 'Voi
     private final EmailTreeItem<String> foldersRoot;
 
     private final List<Folder> folderList;
+
+    private IconResolver iconResolver = new IconResolver();
 
     public FetchFolderService(Store store, EmailTreeItem<String> treeItem, List<Folder> folderList) {
         this.store = store;
@@ -45,6 +48,7 @@ public class FetchFolderService extends Service<Void> { //void return type. 'Voi
         for(Folder folder : folders){
             folderList.add(folder);
             EmailTreeItem<String> emailTreeItem = new EmailTreeItem<>(folder.getName());
+            emailTreeItem.setGraphic(iconResolver.getIconForFolder(folder.getName()));
             foldersRoot.getChildren().add(emailTreeItem);
             foldersRoot.setExpanded(true);
             fetchMessageOnFolder(folder, emailTreeItem);

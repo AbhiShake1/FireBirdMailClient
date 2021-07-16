@@ -5,6 +5,7 @@ import com.abhi.controller.service.FolderUpdaterService;
 import com.abhi.model.EmailAccount;
 import com.abhi.model.EmailMessage;
 import com.abhi.model.EmailTreeItem;
+import com.abhi.view.IconResolver;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -27,6 +28,8 @@ public class EmailManager {
     private final List<Folder> folderList = new ArrayList<>();
 
     private final ObservableList<EmailAccount> emailAccounts = FXCollections.observableArrayList();
+
+    private IconResolver iconResolver = new IconResolver();
 
     public EmailManager() {
         folderUpdaterService = new FolderUpdaterService(folderList);
@@ -52,6 +55,7 @@ public class EmailManager {
     public void addEmailAccount(EmailAccount emailAccount){
         emailAccounts.add(emailAccount);
         EmailTreeItem<String> treeItem = new EmailTreeItem<>(emailAccount.getAddress());
+        treeItem.setGraphic(iconResolver.getIconForFolder(emailAccount.getAddress()));
         FetchFolderService fetchFolderService = new FetchFolderService(emailAccount.getStore(), treeItem, folderList);
         fetchFolderService.start();
         folderRoot.getChildren().add(treeItem);
