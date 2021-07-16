@@ -20,6 +20,8 @@ public class PersistenceAccess {
             List<ValidAccount> persistentList = (List<ValidAccount>) objectInputStream.readObject();
             decodePasswords(persistentList);
             resultList.addAll(persistentList);
+            inputStream.close();
+            objectInputStream.close();
         }catch (Exception ignored){}
         return resultList;
     }
