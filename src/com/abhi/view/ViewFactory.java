@@ -80,6 +80,7 @@ public class ViewFactory {
             return;
         }
         Scene scene = new Scene(parent);
+        updateStyles(scene);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -91,13 +92,15 @@ public class ViewFactory {
         activeStages.remove(stage);
     }
 
-    public void updateStyles() {
-        for (Stage stage : activeStages){
-            Scene scene = stage.getScene();
-            scene.getStylesheets().clear(); //clear previous css
-            scene.getStylesheets().add(getClass().getResource(BackgroundTheme.getCssPath(theme)).toExternalForm());
-            //don't need to assert not null because it will crash if null
-            scene.getStylesheets().add(getClass().getResource(FontSize.getCssPath(fontSize)).toExternalForm());
-        }
+    public void updateAllStyles(){
+        for(Stage stage : activeStages) updateStyles(stage.getScene());
+    }
+
+    public void updateStyles(Scene scene) {
+        scene.getStylesheets().clear(); //clean previous styles
+        scene.getStylesheets().add(getClass().getResource(BackgroundTheme
+                .getCssPath(getBackgroundTheme())).toExternalForm());
+        scene.getStylesheets().add(getClass().getResource(FontSize
+                .getCssPath(fontSize)).toExternalForm());
     }
 }
