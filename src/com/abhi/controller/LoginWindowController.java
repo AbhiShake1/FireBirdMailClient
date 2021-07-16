@@ -5,6 +5,7 @@ import com.abhi.controller.service.LoginService;
 import com.abhi.model.EmailAccount;
 import com.abhi.view.ViewFactory;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -20,6 +21,9 @@ public class LoginWindowController extends BaseController {
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private Button loginButton;
+
     public LoginWindowController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
         super(emailManager, viewFactory, fxmlName);
     }
@@ -30,6 +34,7 @@ public class LoginWindowController extends BaseController {
             EmailAccount emailAccount = new EmailAccount(emailField.getText(), passwordField.getText());
             LoginService loginService = new LoginService(emailAccount,emailManager);
             loginService.start(); //start background task thread to avoid unresponsive UI or a small time while logging in
+            loginButton.setText("Logging in..."); //change text after button is clicked
             loginService.setOnSucceeded(e->{
                 EmailLoginResult emailLoginResult = loginService.getValue();
                 switch (emailLoginResult) {
@@ -47,7 +52,6 @@ public class LoginWindowController extends BaseController {
                 }
             });
         }
-
     }
 
     private boolean isFieldValid(){
