@@ -74,8 +74,8 @@ public class LoginWindowController extends BaseController {
             errorLabel.setText("Please enter email.");
             return false;
         }
-        if(passwordField.getText().isBlank()){//remove wide spaces before checking empty
-            errorLabel.setText("Please enter email.");
+        if(passwordField.getText().isBlank() && passwordFieldVisible.getText().isBlank()){//remove wide spaces before checking empty
+            errorLabel.setText("Please enter password.");
             return false;
         }
         return true;

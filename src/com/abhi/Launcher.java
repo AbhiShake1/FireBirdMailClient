@@ -24,7 +24,7 @@ public class Launcher extends Application {
 
     private void checkPersistence(ViewFactory viewFactory) {
         List<ValidAccount> validAccounts = persistenceAccess.loadAccounts();
-        if(validAccounts.size()>0){ //if accounts exist
+        if(!validAccounts.isEmpty()){ //if accounts exist
             viewFactory.showMainWindow();
             validAccounts.forEach(e->{
                 EmailAccount emailAccount = new EmailAccount(e.getAddress(), e.getPassword());
